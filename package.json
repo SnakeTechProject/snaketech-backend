@@ -11,13 +11,17 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./bin/index.js",
-    "dev": "ts-node ./src/index.ts"
+    "dev": "ts-node ./src/index.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "typescript": "^4.8.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@types/node": "^18.7.16",
+    "husky": "^8.0.0",
     "ts-node": "^10.9.1"
   }
 }
