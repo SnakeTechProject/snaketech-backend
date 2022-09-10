@@ -8,6 +8,11 @@
   },
   "author": "snaketech",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin/index.js",
+    "dev": "ts-node ./src/index.ts"
+  },
   "dependencies": {
     "typescript": "^4.8.3"
   },
