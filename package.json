@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./bin/index.js",
-    "dev": "ts-node ./src/index.ts",
+    "dev": "nodemon",
     "prepare": "husky install"
   },
   "dependencies": {
