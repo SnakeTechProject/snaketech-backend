@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./bin/index.js",
-    "dev": "nodemon",
+    "dev": "docker compose -f docker-compose.dev.yml up -d && nodemon",
     "prepare": "husky install"
   },
   "dependencies": {
