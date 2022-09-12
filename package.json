@@ -12,7 +12,8 @@
     "build": "tsc",
     "start": "node ./bin/index.js",
     "dev": "docker compose -f docker-compose.dev.yml up -d && nodemon",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "npx eslint . --cache"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
