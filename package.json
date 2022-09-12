@@ -13,7 +13,8 @@
     "start": "node ./bin/index.js",
     "dev": "docker compose -f docker-compose.dev.yml up -d && nodemon",
     "prepare": "husky install",
-    "lint": "npx eslint . --cache"
+    "lint": "npx eslint . --cache",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
@@ -33,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
     "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
     "nodemon": "^2.0.19",
     "prisma": "^4.3.1",
     "ts-node": "^10.9.1"
