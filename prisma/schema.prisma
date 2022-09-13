@@ -9,3 +9,58 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id         String    @id
+  name       String
+  email      String    @unique
+  password   String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Article    Article[]
+  Comment    Comment[]
+  Likes      Like[]
+
+  @@map("user")
+}
+
+model Article {
+  id         Int       @id @default(autoincrement())
+  title      String
+  slug       String
+  content    String
+  author_id  String
+  author     User      @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Comment    Comment[]
+  Likes      Like[]
+
+  @@map("article")
+}
+
+model Comment {
+  id         Int       @id @default(autoincrement())
+  content    String
+  author_id  String
+  author     User      @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  article_id Int
+  article    Article   @relation(fields: [article_id], references: [id], onDelete: Cascade)
+  parent_id  Int
+  reply      Comment[] @relation("reply")
+  parent     Comment?  @relation("reply", fields: [parent_id], references: [id])
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  @@map("comment")
+}
+
+model Like {
+  fk_user_id    String
+  fk_article_id Int
+  user          User    @relation(fields: [fk_user_id], references: [id])
+  article       Article @relation(fields: [fk_article_id], references: [id])
+
+  @@id([fk_user_id, fk_article_id])
+  @@map("like")
+}
