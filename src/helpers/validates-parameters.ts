@@ -28,8 +28,8 @@ class Validate {
     return (this.isNotEmpty(id) && this.isNumber(id));
   };
 
-  public uuid = (userId: string): boolean => {
-    return (this.isNotEmpty(userId) && this.isString(userId));
+  public uuid = (uuid: string): boolean => {
+    return (this.isNotEmpty(uuid) && this.isString(uuid));
   };
 }
 
