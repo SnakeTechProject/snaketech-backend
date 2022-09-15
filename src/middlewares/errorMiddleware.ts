@@ -1,12 +1,18 @@
 import { HttpException } from '../errors/HttpException';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 export const errorMiddleware = (
   err: HttpException,
   req: Request,
   res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  next: NextFunction,
 ) => {
-  const status = err.status || 500;
-  const message = err.message || 'Something went wrong';
-  res.status(status).send({ status, message });
+  if (err instanceof HttpException) {
+    return res.status(err.status).send({ message: err.message });
+  }
+
+  console.error(err);
+
+  return res.sendStatus(500);
 };
