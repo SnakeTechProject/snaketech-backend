@@ -9,7 +9,12 @@
     "strict": true,
     "skipLibCheck": true,
     "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "sourceMap": true,
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types",
+    ]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "bin/**/*"],
