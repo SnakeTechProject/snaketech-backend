@@ -1,6 +1,8 @@
+import { hash } from 'bcrypt';
+import { randomUUID } from 'crypto';
+
 import { HttpException } from './../../../errors/HttpException';
 import { UserRepository } from '../repositories/UserRepository';
-import { randomUUID } from 'crypto';
 
 export class CreateUser {
   private repo;
@@ -58,11 +60,13 @@ export class CreateUser {
 
     const id = randomUUID();
 
+    const hashedPassword = await hash(password, 14);
+
     await this.repo.create({
       id,
       email,
       name,
-      password,
+      password: hashedPassword,
       created_at: new Date(),
       updated_at: new Date(),
     });
