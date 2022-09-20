@@ -5,6 +5,13 @@ export const rootRouter = Router();
 
 const articleController = new ArticleController();
 
+rootRouter.get(
+  '/blog/:id',
+  (req: Request, res: Response, next: NextFunction) => {
+    articleController.read(req, res, next);
+  },
+);
+
 rootRouter.post('/blog', (req: Request, res: Response, next: NextFunction) => {
   articleController.create(req, res, next);
 });
