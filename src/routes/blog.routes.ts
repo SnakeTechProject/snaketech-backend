@@ -2,13 +2,12 @@ import { Router } from 'express';
 import { ArticleController } from '../modules/articles/ArticleController';
 
 export const blogRouter = Router();
-const articleController = new ArticleController();
 
-blogRouter.get('/:id', articleController.read);
+blogRouter.get('/:id', ArticleController.read);
 
-blogRouter.get('/', articleController.findAll);
+blogRouter.get('/', ArticleController.findAll);
 
-blogRouter.post('/', articleController.create);
+blogRouter.post('/', ArticleController.create);
 
 blogRouter.put('/:id', ArticleController.update);
 

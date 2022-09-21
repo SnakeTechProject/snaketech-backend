@@ -9,7 +9,7 @@ import UpdateArticle from './useCase/UpdateArticle';
 
 const repository = new ArticleRepository();
 export class ArticleController {
-  async create(req: Request, res: Response, next: NextFunction) {
+  static async create(req: Request, res: Response, next: NextFunction) {
     const { author_id, content, title } = req.body;
 
     const createArticle = new CreateArticle(repository);
@@ -22,7 +22,7 @@ export class ArticleController {
     }
   }
 
-  async read(req: Request, res: Response, next: NextFunction) {
+  static async read(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id);
 
     const readArticle = new ReadArticle(repository);
@@ -35,7 +35,7 @@ export class ArticleController {
     }
   }
 
-  async findAll(req: Request, res: Response) {
+  static async findAll(req: Request, res: Response) {
     const findAllArticles = new FindAllArticles(repository);
 
     const response = await findAllArticles.execute();
