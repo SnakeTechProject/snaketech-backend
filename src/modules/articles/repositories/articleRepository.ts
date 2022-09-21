@@ -12,7 +12,15 @@ export class ArticleRepository {
     return await db.article.findUnique({
       where: { id },
       include: {
-        author: true,
+        author: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            created_at: true,
+            updated_at: true,
+          }
+        },
         Comment: true,
         Likes: true,
       }
@@ -22,7 +30,15 @@ export class ArticleRepository {
   async findAll() {
     return await db.article.findMany({
       include: {
-        author: true,
+        author: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            created_at: true,
+            updated_at: true,
+          }
+        },
         Comment: true,
         Likes: true,
       }
