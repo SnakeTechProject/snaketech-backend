@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { IArticle } from '../../interfaces/articleInterface';
 import { ArticleRepository } from './repositories/ArticleRepository';
 import CreateArticle from './useCase/CreateArticle';
+import DeleteArticle from './useCase/DeleteArticle';
 import FindAllArticles from './useCase/FindAllArticles';
 import ReadArticle from './useCase/ReadArticle';
 import UpdateArticle from './useCase/UpdateArticle';
@@ -50,6 +51,19 @@ export class ArticleController {
     try {
       await updateArticle.execute(id, { content, title });
       return res.sendStatus(201);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    const id = parseInt(req.params.id);
+
+    const deleteArticle = new DeleteArticle(repository);
+
+    try {
+      await deleteArticle.execute(id);
+      return res.sendStatus(200);
     } catch (error) {
       next(error);
     }
