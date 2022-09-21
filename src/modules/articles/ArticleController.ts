@@ -34,14 +34,10 @@ export class ArticleController {
     }
   }
 
-  async findAll(res: Response, next: NextFunction) {
+  async findAll(req: Request, res: Response) {
     const findAllArticles = new FindAllArticles(repository);
 
-    try {
-      const response = await findAllArticles.execute();
-      return res.json(response);
-    } catch (error) {
-      next(error);
-    }
+    const response = await findAllArticles.execute();
+    return res.json(response);
   }
 }
