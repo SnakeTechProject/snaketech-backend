@@ -9,3 +9,5 @@ blogRouter.get('/:id', articleController.read);
 blogRouter.get('/', articleController.findAll);
 
 blogRouter.post('/', articleController.create);
+
+blogRouter.put('/:id', ArticleController.update);
