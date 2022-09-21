@@ -12,6 +12,10 @@ rootRouter.get(
   },
 );
 
+rootRouter.get('/blog', (req: Request, res: Response, next: NextFunction) => {
+  articleController.findAll(res, next);
+});
+
 rootRouter.post('/blog', (req: Request, res: Response, next: NextFunction) => {
   articleController.create(req, res, next);
 });
