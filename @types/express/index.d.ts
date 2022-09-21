@@ -8,6 +8,7 @@ declare global {
   interface CustomRequest extends Request {
     user?: {
       user_id: string;
+      features: string[];
     };
   }
 }
