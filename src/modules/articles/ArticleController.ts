@@ -4,6 +4,7 @@ import { ArticleRepository } from './repositories/ArticleRepository';
 import CreateArticle from './useCase/CreateArticle';
 import FindAllArticles from './useCase/FindAllArticles';
 import ReadArticle from './useCase/ReadArticle';
+import UpdateArticle from './useCase/UpdateArticle';
 
 const repository = new ArticleRepository();
 export class ArticleController {
@@ -14,7 +15,6 @@ export class ArticleController {
 
     try {
       await createArticle.execute({ author_id, content, title } as IArticle);
-
       return res.sendStatus(201);
     } catch (error) {
       next(error);
@@ -39,5 +39,19 @@ export class ArticleController {
 
     const response = await findAllArticles.execute();
     return res.json(response);
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    const id = parseInt(req.params.id);
+    const { content, title } = req.body;
+
+    const updateArticle = new UpdateArticle(repository);
+
+    try {
+      await updateArticle.execute(id, { content, title });
+      return res.sendStatus(201);
+    } catch (error) {
+      next(error);
+    }
   }
 }
