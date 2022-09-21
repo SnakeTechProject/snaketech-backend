@@ -11,3 +11,5 @@ blogRouter.get('/', articleController.findAll);
 blogRouter.post('/', articleController.create);
 
 blogRouter.put('/:id', ArticleController.update);
+
+blogRouter.delete('/:id', ArticleController.delete);
