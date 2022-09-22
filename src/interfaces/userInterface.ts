@@ -7,5 +7,6 @@ export interface IUser {
 
 export interface IUserUpdate {
   name?: string;
+  email?: string;
   password?: string;
 }
