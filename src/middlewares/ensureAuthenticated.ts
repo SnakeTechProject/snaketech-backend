@@ -18,10 +18,13 @@ export const ensureAuthenticated = (
   const token = authHeader.split(' ')[1];
 
   try {
-    const payload = <{ user_id: string }>verify(token, jwt_secret);
+    const payload = <{ user_id: string; permissions: string[] }>(
+      verify(token, jwt_secret)
+    );
 
     req.user = {
       user_id: payload.user_id,
+      permissions: payload.permissions,
     };
 
     next();
