@@ -3,12 +3,13 @@ import { Response } from 'express';
 import { CreateUser } from './useCases/CreateUser';
 import { UserRepository } from './repositories/UserRepository';
 
+const repository = new UserRepository();
+
 export class UsersController {
-  async create(req: CustomRequest, res: Response) {
+  static async create(req: CustomRequest, res: Response) {
     const { name, email, password } = req.body;
 
-    const repo = new UserRepository();
-    const useCase = new CreateUser(repo);
+    const useCase = new CreateUser(repository);
 
     await useCase.execute(name, email, password);
 
