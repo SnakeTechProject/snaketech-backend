@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { UserRepository } from './repositories/UserRepository';
 import { CreateUser } from './useCases/CreateUser';
+import { DeleteUser } from './useCases/DeleteUser';
 import { FindUserByEmail } from './useCases/FindUserByEmail';
 import { ReadUser } from './useCases/ReadUser';
 import { UpdateUser } from './useCases/UpdateUser';
@@ -35,7 +36,7 @@ export class UsersController {
 
     const user = await useCase.execute(email);
 
-    return res.json(user);
+    return res.status(200).json(user);
   }
 
   static async update(req: CustomRequest, res: Response) {
@@ -45,6 +46,16 @@ export class UsersController {
     const useCase = new UpdateUser(repository);
 
     await useCase.execute(id, data);
+
+    return res.sendStatus(200);
+  }
+
+  static async delete(req: CustomRequest, res: Response) {
+    const { id } = req.body;
+
+    const useCase = new DeleteUser(repository);
+
+    await useCase.execute(id);
 
     return res.sendStatus(200);
   }
