@@ -46,7 +46,7 @@ model Comment {
   author     User      @relation(fields: [author_id], references: [id], onDelete: Cascade)
   article_id Int
   article    Article   @relation(fields: [article_id], references: [id], onDelete: Cascade)
-  parent_id  Int
+  parent_id  Int?
   reply      Comment[] @relation("reply")
   parent     Comment?  @relation("reply", fields: [parent_id], references: [id])
   created_at DateTime  @default(now())
