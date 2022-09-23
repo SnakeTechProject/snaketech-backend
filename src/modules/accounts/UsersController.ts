@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { UserRepository } from './repositories/UserRepository';
 import { CreateUser } from './useCases/CreateUser';
+import { FindUserByEmail } from './useCases/FindUserByEmail';
 import { ReadUser } from './useCases/ReadUser';
 
 const repository = new UserRepository();
@@ -17,12 +18,22 @@ export class UsersController {
   }
 
   static async read(req: CustomRequest, res: Response) {
-    const { id } = req.params;
+    const { id } = req.body;
 
     const useCase = new ReadUser(repository);
 
     const user = await useCase.execute(id);
 
     return res.status(200).json(user);
+  }
+
+  static async findByEmail(req: CustomRequest, res: Response) {
+    const { email } = req.body;
+
+    const useCase = new FindUserByEmail(repository);
+
+    const user = await useCase.execute(email);
+
+    return res.json(user);
   }
 }
