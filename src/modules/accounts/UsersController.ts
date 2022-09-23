@@ -1,10 +1,6 @@
 import { Response } from 'express';
 import { UserRepository } from './repositories/UserRepository';
-import { CreateUser } from './useCases/CreateUser';
-import { DeleteUser } from './useCases/DeleteUser';
-import { FindUserByEmail } from './useCases/FindUserByEmail';
-import { ReadUser } from './useCases/ReadUser';
-import { UpdateUser } from './useCases/UpdateUser';
+import { CreateUser, ReadUser, DeleteUser, FindUserByEmail, UpdateUser } from '../accounts/useCases';
 
 const repository = new UserRepository();
 
