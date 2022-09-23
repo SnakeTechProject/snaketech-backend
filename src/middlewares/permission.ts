@@ -13,6 +13,7 @@ const availableFeatures = [
   'create:comment',
   'read:comment',
   'update:comment',
+  'update:comment:others',
   'delete:comment',
 
   // Challenge
@@ -30,13 +31,37 @@ const availableFeatures = [
 
 type AvailableFeatures = typeof availableFeatures[number];
 
-export const canRequest = (feature: AvailableFeatures) => {
+/**
+ * Middleware that only allow users that have the given permissions to access the next function:
+ *
+ * @example
+ * // You can pass one permission
+ * router.delete('/user', canRequest('delete:user'), deleteUser)
+ *
+ * // You can pass many permissions, the user must have all of them
+ * router.put('/user', canRequest('read:account', 'update:account'), updateAccount)
+ *
+ * @param permissions
+ */
+
+export const canRequest = (...permissions: AvailableFeatures[]) => {
   return async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
 
-    if (!user?.features.includes(feature)) {
-      throw new HttpException(403, `You don't have permission to ${feature}`);
+    if (!user) {
+      throw new Error(
+        'You must use the "ensureAuthenticated" Middleware before using "canRequest"',
+      );
     }
+
+    permissions.forEach((permission) => {
+      if (!user?.permissions.includes(permission)) {
+        throw new HttpException(
+          403,
+          `You don't have permission to ${permission}`,
+        );
+      }
+    });
 
     return next();
   };
