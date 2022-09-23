@@ -16,7 +16,6 @@ export class FindUserByEmail {
       missingData.push('email');
     }
 
-
     if (missingData.length > 0) {
       throw new HttpException(
         400,
@@ -33,7 +32,7 @@ export class FindUserByEmail {
     if (!Validate.email(email)) {
       invalidData.push('email: invalid format');
     }
-    
+
     if (invalidData.length > 0) {
       throw new HttpException(400, `Invalid fields: ${invalidData.join(', ')}`);
     }
