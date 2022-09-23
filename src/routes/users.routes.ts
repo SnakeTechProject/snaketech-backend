@@ -5,4 +5,6 @@ export const usersRouter = Router();
 
 usersRouter.post('/', UsersController.create);
 
-usersRouter.get('/:id', UsersController.read);
+usersRouter.get('/find-by-id', UsersController.read);
+
+usersRouter.get('/find-by-email', UsersController.findByEmail);
