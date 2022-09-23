@@ -1,7 +1,7 @@
 import { Response } from 'express';
-
-import { CreateUser } from './useCases/CreateUser';
 import { UserRepository } from './repositories/UserRepository';
+import { CreateUser } from './useCases/CreateUser';
+import { ReadUser } from './useCases/ReadUser';
 
 const repository = new UserRepository();
 
@@ -14,5 +14,15 @@ export class UsersController {
     await useCase.execute(name, email, password);
 
     return res.sendStatus(201);
+  }
+
+  static async read(req: CustomRequest, res: Response) {
+    const { id } = req.params;
+
+    const useCase = new ReadUser(repository);
+
+    const user = await useCase.execute(id);
+
+    return res.status(200).json(user);
   }
 }
