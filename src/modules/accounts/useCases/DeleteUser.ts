@@ -16,7 +16,6 @@ export class DeleteUser {
       missingData.push('id');
     }
 
-
     if (missingData.length > 0) {
       throw new HttpException(
         400,
