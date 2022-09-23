@@ -16,7 +16,6 @@ export class ReadUser {
       missingData.push('id');
     }
 
-
     if (missingData.length > 0) {
       throw new HttpException(
         400,
@@ -29,7 +28,7 @@ export class ReadUser {
     if (!Validate.isString(id)) {
       invalidData.push('id: id must be a string');
     }
-    
+
     if (invalidData.length > 0) {
       throw new HttpException(400, `Invalid fields: ${invalidData.join(', ')}`);
     }
