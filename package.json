@@ -14,7 +14,11 @@
     "dev": "docker compose -f docker-compose.dev.yml up -d && nodemon",
     "prepare": "husky install",
     "lint": "npx eslint . --cache",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node ./prisma/database/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
