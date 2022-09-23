@@ -3,6 +3,7 @@ import { UserRepository } from './repositories/UserRepository';
 import { CreateUser } from './useCases/CreateUser';
 import { FindUserByEmail } from './useCases/FindUserByEmail';
 import { ReadUser } from './useCases/ReadUser';
+import { UpdateUser } from './useCases/UpdateUser';
 
 const repository = new UserRepository();
 
@@ -35,5 +36,16 @@ export class UsersController {
     const user = await useCase.execute(email);
 
     return res.json(user);
+  }
+
+  static async update(req: CustomRequest, res: Response) {
+    const { id } = req.params;
+    const data = req.body;
+
+    const useCase = new UpdateUser(repository);
+
+    await useCase.execute(id, data);
+
+    return res.sendStatus(200);
   }
 }
