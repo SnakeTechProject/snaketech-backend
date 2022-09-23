@@ -4,3 +4,5 @@ import { UsersController } from '../modules/accounts/UsersController';
 export const usersRouter = Router();
 
 usersRouter.post('/', UsersController.create);
+
+usersRouter.get('/:id', UsersController.read);
