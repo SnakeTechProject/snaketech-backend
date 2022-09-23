@@ -2,6 +2,7 @@ import { HttpException } from '../../../errors/HttpException';
 import { UserRepository } from '../repositories/UserRepository';
 import { IUserUpdate } from '../../../interfaces/userInterface';
 import Validate from '../../../helpers/validates-parameters';
+import { hash } from 'bcrypt';
 
 export class UpdateUser {
   private repository;
@@ -10,7 +11,7 @@ export class UpdateUser {
     this.repository = repository;
   }
 
-  public async execute(id: string, userUpdate: IUserUpdate): Promise<void> {
+  public async execute(id: string, { name, email, password }: IUserUpdate): Promise<void> {
     const missingData: string[] = [];
 
     if (!Validate.isNotEmpty(id)) {
@@ -30,6 +31,20 @@ export class UpdateUser {
       invalidData.push('id: id must be a string');
     }
 
+    if (name) {
+      if (!Validate.isString(name)) invalidData.push('name: name must be a string');
+    }
+
+    if (email) {
+      if (!Validate.isString(email)) invalidData.push('email: email must be a string');
+      if (!Validate.email(email)) invalidData.push('email: email invalid format');
+    }
+
+    if (password) {
+      if (!Validate.isString(password)) invalidData.push('password: password must be a string');
+      if (password.length < 6) invalidData.push('password: password length invalid');
+    }
+
     if (invalidData.length > 0) {
       throw new HttpException(400, `Invalid fields: ${invalidData.join(', ')}`);
     }
@@ -40,6 +55,16 @@ export class UpdateUser {
       throw new HttpException(400, 'user does not exist');
     }
 
-    await this.repository.update(id, userUpdate);
+    let newPasswordHashed = password;
+
+    if(newPasswordHashed) {
+      newPasswordHashed = await hash(newPasswordHashed, 14);
+    }
+
+    await this.repository.update(id, {
+      name: name,
+      email: email,
+      password: newPasswordHashed
+    });
   }
 }
