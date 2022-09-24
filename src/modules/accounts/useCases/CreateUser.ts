@@ -62,11 +62,13 @@ export class CreateUser {
 
     const hashedPassword = await hash(password, 14);
 
-    await this.repo.create({
+    const createdUser = await this.repo.create({
       id,
       email,
       name,
       password: hashedPassword
     });
+
+    await this.repo.addRole(createdUser.id, 2);  // the user role have the id 2
   }
 }

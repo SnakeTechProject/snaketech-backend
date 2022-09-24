@@ -1,5 +1,5 @@
 import { HttpException } from './../errors/HttpException';
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 const availableFeatures = [
   // Account
@@ -45,7 +45,7 @@ type AvailableFeatures = typeof availableFeatures[number];
  */
 
 export const canRequest = (...permissions: AvailableFeatures[]) => {
-  return async (req: CustomRequest, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
 
     if (!user) {
