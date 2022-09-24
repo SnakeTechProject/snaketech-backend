@@ -48,6 +48,24 @@ export class UserRepository {
             },
           },
         },
+        User_Role: {
+          select: {
+            Role: {
+              select: {
+                Permissions: {
+                  select: {
+                    Permission: {
+                      select: {
+                        id: true,
+                        name: true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
     });
 

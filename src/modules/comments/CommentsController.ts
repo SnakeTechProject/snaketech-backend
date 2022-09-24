@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 import { ArticleRepository } from '../articles/repositories/ArticleRepository';
 import { CommentsRepository } from './repositories/CommentsRepository';
@@ -6,7 +6,7 @@ import { CommentsRepository } from './repositories/CommentsRepository';
 import { CreateComment, ReadComments, UpdateComment, DeleteComments } from './useCases/';
 
 export class CommentsController {
-  static async create(req: CustomRequest, res: Response) {
+  static async create(req: Request, res: Response) {
     const { article_id, parent_id, content } = req.body;
     const author_id = req.user?.user_id as string;
 
@@ -25,7 +25,7 @@ export class CommentsController {
     return res.sendStatus(201);
   }
 
-  static async read(req: CustomRequest, res: Response) {
+  static async read(req: Request, res: Response) {
     const { article_id } = req.body;
 
     const commentsRepository = new CommentsRepository();
@@ -36,7 +36,7 @@ export class CommentsController {
     return res.status(200).json(comments);
   }
 
-  static async update(req: CustomRequest, res: Response) {
+  static async update(req: Request, res: Response) {
     const { id, content } = req.body;
     const author_id = req.user?.user_id as string;
 
@@ -48,7 +48,7 @@ export class CommentsController {
     return res.sendStatus(200);
   }
 
-  static async delete(req: CustomRequest, res: Response) {
+  static async delete(req: Request, res: Response) {
     const { id } = req.body;
     const author_id = req.user?.user_id as string;
 

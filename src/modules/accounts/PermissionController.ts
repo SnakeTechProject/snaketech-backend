@@ -1,9 +1,9 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { PermissionRepository } from './repositories/PermissionRepository';
 import { CreatePermission } from './useCases/CreatePermission';
 
 export class PermissionController {
-  static async create(req: CustomRequest, res: Response) {
+  static async create(req: Request, res: Response) {
     const { name, description } = req.body;
 
     const permissionRepository = new PermissionRepository();
