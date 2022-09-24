@@ -1,4 +1,5 @@
-import { prisma as db, IUser } from '../../../lib/prisma';
+import { prisma as db } from '../../../lib/prisma';
+import { IUser, IUserUpdate } from '../../../interfaces/userInterface';
 
 export class UserRepository {
   async create({ id, email, name, password }: IUser) {
@@ -107,16 +108,12 @@ export class UserRepository {
     return user;
   }
 
-  async update({ id, name, email, password }: IUser) {
+  async update(id: string, data: IUserUpdate) {
     await db.user.update({
       where: {
         id,
       },
-      data: {
-        name,
-        email,
-        password,
-      },
+      data: data,
     });
   }
 
