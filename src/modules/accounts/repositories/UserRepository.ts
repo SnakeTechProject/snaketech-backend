@@ -3,7 +3,7 @@ import { IUser, IUserUpdate } from '../../../interfaces/userInterface';
 
 export class UserRepository {
   async create({ id, email, name, password }: IUser) {
-    await db.user.create({
+    const user = await db.user.create({
       data: {
         id,
         email,
@@ -11,6 +11,7 @@ export class UserRepository {
         password,
       },
     });
+    return user;
   }
 
   async findOneByEmail(email: string) {
@@ -44,6 +45,24 @@ export class UserRepository {
                 slug: true,
                 id: true,
                 title: true,
+              },
+            },
+          },
+        },
+        User_Role: {
+          select: {
+            Role: {
+              select: {
+                Permissions: {
+                  select: {
+                    Permission: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
               },
             },
           },
@@ -84,6 +103,24 @@ export class UserRepository {
             },
           },
         },
+        User_Role: {
+          select: {
+            Role: {
+              select: {
+                Permissions: {
+                  select: {
+                    Permission: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
 
@@ -103,6 +140,15 @@ export class UserRepository {
     await db.user.delete({
       where: {
         id,
+      },
+    });
+  }
+
+  async addRole(user_id: string, role_id: number) {
+    await db.user_Role.create({
+      data: {
+        user_id,
+        role_id,
       },
     });
   }

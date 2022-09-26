@@ -11,15 +11,16 @@ datasource db {
 }
 
 model User {
-  id         String    @id
+  id         String      @id
   name       String
-  email      String    @unique
+  email      String      @unique
   password   String
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
   Article    Article[]
   Comment    Comment[]
   Likes      Like[]
+  User_Role  User_Role[]
 
   @@map("user")
 }
@@ -63,4 +64,45 @@ model Like {
 
   @@id([fk_user_id, fk_article_id])
   @@map("like")
+}
+
+model Role {
+  id          Int               @id @default(autoincrement())
+  name        String            @unique
+  description String?
+  created_at  DateTime          @default(now())
+  Permissions Permission_Role[]
+  User_Role   User_Role[]
+
+  @@map("role")
+}
+
+model Permission {
+  id          Int               @id @default(autoincrement())
+  name        String            @unique
+  description String?
+  created_at  DateTime          @default(now())
+  Roles       Permission_Role[]
+
+  @@map("permission")
+}
+
+model Permission_Role {
+  role_id       Int
+  permission_id Int
+  Role          Role       @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  Permission    Permission @relation(fields: [permission_id], references: [id], onDelete: Cascade)
+
+  @@id([role_id, permission_id])
+  @@map("permission_role")
+}
+
+model User_Role {
+  user_id String
+  role_id Int
+  User    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Role    Role   @relation(fields: [role_id], references: [id], onDelete: Cascade)
+
+  @@id([role_id, user_id])
+  @@map("user_role")
 }

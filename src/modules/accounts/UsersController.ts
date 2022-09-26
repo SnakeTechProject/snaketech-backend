@@ -1,11 +1,17 @@
-import { Response } from 'express';
+
+import { Request, Response } from 'express';
+
+import { CreateUser } from './useCases/CreateUser';
+
 import { UserRepository } from './repositories/UserRepository';
 import { CreateUser, ReadUser, DeleteUser, FindUserByEmail, UpdateUser } from '../accounts/useCases';
 
 const repository = new UserRepository();
 
 export class UsersController {
-  static async create(req: CustomRequest, res: Response) {
+
+  async create(req: Request, res: Response) {
+
     const { name, email, password } = req.body;
 
     const useCase = new CreateUser(repository);
@@ -15,7 +21,7 @@ export class UsersController {
     return res.sendStatus(201);
   }
 
-  static async read(req: CustomRequest, res: Response) {
+  static async read(req: Request, res: Response) {
     const { id } = req.body;
 
     const useCase = new ReadUser(repository);
@@ -25,7 +31,7 @@ export class UsersController {
     return res.status(200).json(user);
   }
 
-  static async findByEmail(req: CustomRequest, res: Response) {
+  static async findByEmail(req: Request, res: Response) {
     const { email } = req.body;
 
     const useCase = new FindUserByEmail(repository);
@@ -35,7 +41,7 @@ export class UsersController {
     return res.status(200).json(user);
   }
 
-  static async update(req: CustomRequest, res: Response) {
+  static async update(req: Request, res: Response) {
     const { id } = req.params;
     const data = req.body;
 
@@ -46,7 +52,7 @@ export class UsersController {
     return res.sendStatus(200);
   }
 
-  static async delete(req: CustomRequest, res: Response) {
+  static async delete(req: Request, res: Response) {
     const { id } = req.body;
 
     const useCase = new DeleteUser(repository);
