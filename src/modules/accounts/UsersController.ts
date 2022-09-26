@@ -1,7 +1,4 @@
-
 import { Request, Response } from 'express';
-
-import { CreateUser } from './useCases/CreateUser';
 
 import { UserRepository } from './repositories/UserRepository';
 import { CreateUser, ReadUser, DeleteUser, FindUserByEmail, UpdateUser } from '../accounts/useCases';
@@ -10,7 +7,7 @@ const repository = new UserRepository();
 
 export class UsersController {
 
-  async create(req: Request, res: Response) {
+  static async create(req: Request, res: Response) {
 
     const { name, email, password } = req.body;
 
