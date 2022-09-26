@@ -43,7 +43,15 @@ export class AuthenticateUser {
       throw new HttpException(401, 'Email or password incorrect');
     }
 
-    const token = sign({ user_id: user.id }, jwt_secret, { expiresIn: '1h' });
+    const permissions = user.User_Role.map((i) => {
+      return i.Role.Permissions.map((i) => i.Permission.name);
+    }).flat(1);
+
+    const token = sign(
+      { user_id: user.id, permissions: permissions },
+      jwt_secret,
+      { expiresIn: '1h' },
+    );
 
     return {
       token,

@@ -1,13 +1,15 @@
 /* eslint-disable no-var */
 import { PrismaClient } from '@prisma/client';
-import { Request } from 'express';
 
 declare global {
-  var prisma: PrismaClient | null;
+  var prisma: PrismaClient | undefined;
 
-  interface CustomRequest extends Request {
-    user?: {
-      user_id: string;
-    };
+  declare namespace Express {
+    export interface Request {
+      user?: {
+        user_id: string;
+        permissions: string[];
+      }
+    }
   }
 }

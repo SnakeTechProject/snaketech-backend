@@ -3,6 +3,7 @@ import { randomUUID } from 'crypto';
 
 import { HttpException } from './../../../errors/HttpException';
 import { UserRepository } from '../repositories/UserRepository';
+import Validate from '../../../helpers/validates-parameters';
 
 export class CreateUser {
   private repo;
@@ -35,16 +36,15 @@ export class CreateUser {
 
     const invalidData = [];
 
-    if (typeof name !== 'string') {
+    if (!Validate.isString(name)) {
       invalidData.push('name');
     }
 
-    // eslint-disable-next-line no-useless-escape
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    if (!Validate.email(email)) {
       invalidData.push('email: invalid format');
     }
 
-    if (typeof password !== 'string' || password.length < 6) {
+    if (!Validate.isString(password) || password.length < 6) {
       invalidData.push('password: minimum of 6 characters');
     }
 
@@ -62,13 +62,13 @@ export class CreateUser {
 
     const hashedPassword = await hash(password, 14);
 
-    await this.repo.create({
+    const createdUser = await this.repo.create({
       id,
       email,
       name,
-      password: hashedPassword,
-      created_at: new Date(),
-      updated_at: new Date(),
+      password: hashedPassword
     });
+
+    await this.repo.addRole(createdUser.id, 2);  // the user role have the id 2
   }
 }
