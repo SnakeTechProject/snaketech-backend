@@ -22,7 +22,7 @@ export class ReadComments {
     const article = await this.articleRepository.findOneById(article_id);
 
     if (!(article)) {
-      throw new HttpException(400, 'Article not exists');
+      throw new HttpException(404, 'Article not exists');
     }
 
     const comments = await this.commentsRepository.findAllByArticleId(article_id);
