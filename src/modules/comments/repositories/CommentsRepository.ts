@@ -3,31 +3,41 @@ import { IComment } from '../../../interfaces/commentInterface';
 
 export class CommentsRepository {
   async create(data: IComment) {
-    await db.comment.create({data});
+    await db.comment.create({ data });
   }
 
   async findAllByArticleId(article_id: number) {
     const comments = await db.comment.findMany({
       where: {
         article_id,
-        parent_id: null
+        parent_id: null,
       },
       select: {
         id: true,
-        author_id: true,
         parent_id: true,
         content: true,
         created_at: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         reply: {
           select: {
             id: true,
-            author_id: true,
             parent_id: true,
             content: true,
             created_at: true,
-          }
-        }
-      }
+            author: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     return comments;
@@ -42,18 +52,7 @@ export class CommentsRepository {
         id: true,
         author_id: true,
         parent_id: true,
-        content: true,
-        created_at: true,
-        reply: {
-          select: {
-            id: true,
-            author_id: true,
-            parent_id: true,
-            content: true,
-            created_at: true,
-          }
-        }
-      }
+      },
     });
 
     return comment;
@@ -62,7 +61,7 @@ export class CommentsRepository {
   async update(id: number, content: string) {
     await db.comment.update({
       where: {
-        id
+        id,
       },
       data: {
         content,
@@ -70,7 +69,7 @@ export class CommentsRepository {
     });
   }
 
-  async delete(id: number){
+  async delete(id: number) {
     await db.comment.delete({
       where: {
         id,
