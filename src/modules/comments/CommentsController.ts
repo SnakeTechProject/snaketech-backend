@@ -27,11 +27,12 @@ export class CommentsController {
 
   static async read(req: Request, res: Response) {
     const { article_id } = req.body;
+    const author_id = req.user?.user_id as string;
 
     const commentsRepository = new CommentsRepository();
     const articlesRepository = new ArticleRepository();
     const readComments = new ReadComments(commentsRepository, articlesRepository);
-    const comments = await readComments.execute(article_id);
+    const comments = await readComments.execute(article_id, author_id);
 
     return res.status(200).json(comments);
   }
