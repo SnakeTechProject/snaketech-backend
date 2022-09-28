@@ -29,6 +29,7 @@
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
     "netlify-lambda": "^2.0.15",
+    "serverless-http": "^3.0.2",
     "url-slug": "^3.0.4"
   },
   "devDependencies": {
