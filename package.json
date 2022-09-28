@@ -9,8 +9,8 @@
   "author": "snaketech",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "start": "node ./bin/index.js",
+    "start": "./node_modules/.bin/netlify-lambda serve src",
+    "build": "./node_modules/.bin/netlify-lambda build src",
     "dev": "docker compose -f docker-compose.dev.yml up -d && nodemon",
     "prepare": "husky install",
     "lint": "npx eslint . --cache",
