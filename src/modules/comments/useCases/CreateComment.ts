@@ -9,7 +9,6 @@ export class CreateComment {
   private commentsRepository;
   private articlesRepository;
   private contentSize = { min: 3, max: 500 };
-  private now = new Date();
 
   constructor (commentsRepository: CommentsRepository, articlesRepository: ArticleRepository) {
     this.commentsRepository = commentsRepository;
@@ -48,11 +47,11 @@ export class CreateComment {
     }
 
     if (!(await this.articlesRepository.findOneById(article_id))) {
-      throw new HttpException(400, 'Article not exists');
+      throw new HttpException(404, 'Article not exists');
     }
 
     if (Validate.isNotEmpty(parent_id) && !(await this.commentsRepository.findOneById(parent_id))) {
-      throw new HttpException(400, 'parent_id not exists');
+      throw new HttpException(404, 'parent_id not exists');
     }
 
     await this.commentsRepository.create({content, author_id, article_id, parent_id});

@@ -23,6 +23,10 @@ export class UpdateComment {
       invalidFields.push('content is empty');
     }
 
+    if (!Validate.isString(content)) {
+      invalidFields.push('content must be string');
+    }
+
     if (!Validate.contentLengthLimit(content, this.contentSize)) {
       invalidFields.push('content is off limits');
     }
