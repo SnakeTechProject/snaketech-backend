@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "start": "./node_modules/.bin/netlify-lambda serve dist",
-    "build": "npx tsc && ./node_modules/.bin/netlify-lambda build dist",
+    "build": "tsc && ./node_modules/.bin/netlify-lambda build dist",
     "dev": "docker compose -f docker-compose.dev.yml up -d && nodemon",
     "prepare": "husky install",
     "lint": "npx eslint . --cache",
