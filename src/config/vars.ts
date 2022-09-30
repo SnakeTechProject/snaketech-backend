@@ -8,7 +8,7 @@ if (env === 'production') {
   dotenv.config({ path: path.join(__dirname, '../../.env.dev') });
 }
 
-export const jwt_secret = <string>process.env.JWT_SECRET;
+export const jwt_secret = process.env.JWT_SECRET as string;
 export const port = process.env.PORT || '3333';
 export const PG_CONFIG = {
   user: process.env.POSTGRES_USER,
