@@ -20,14 +20,12 @@ export const ensureAuthenticated = (
   try {
     const payload = <{ user_id: string, permissions: string[] }>verify(token, jwt_secret);
 
-    console.log(payload);
-
     req.user = {
       user_id: payload.user_id,
       permissions: payload.permissions
     };
 
-    next();
+    return next();
   } catch {
     throw new HttpException(401, 'Invalid token');
   }
