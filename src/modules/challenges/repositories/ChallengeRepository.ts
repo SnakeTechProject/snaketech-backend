@@ -2,12 +2,36 @@ import { prisma as db } from '../../../lib/prisma';
 import { IChallenge, IChallengeUpdate } from '../../../interfaces/challengeInterface';
 
 export class ChanllengeRepository {
-  async create(data: IChallenge)  {
-    await db.challenge.create({ data });
+  async create({ author_id, title, slug, description, difficulty }: IChallenge)  {
+    await db.challenge.create({
+      data: {
+        author_id,
+        title,
+        slug,
+        description,
+        difficulty
+      }
+    });
   }
 
   async findAll() {
-    return await db.challenge.findMany();
+    return await db.challenge.findMany({
+      select: {
+        id: true,
+        author_id: true,
+        author: {
+          select: {
+            name: true,
+          }
+        },
+        title: true,
+        description: true,
+        difficulty: true,
+        slug: true,
+        created_at:true,
+        updated_at:true,
+      }
+    });
   }
 
   async findOneByid(id: number) {
