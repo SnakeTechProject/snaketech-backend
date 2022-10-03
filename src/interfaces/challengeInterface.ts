@@ -3,12 +3,12 @@ export interface IChallenge {
   title: string;
   description: string;
   slug: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  difficulty: string;
 }
 
 export interface IChallengeUpdate {
   title?: string;
   description?: string;
   slug?: string;
-  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  difficulty?: string;
 }
