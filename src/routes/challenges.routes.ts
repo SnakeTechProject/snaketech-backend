@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
-import { ChallengeController } from '../modules/challenges/challengerController';
+import { ChallengeController } from '../modules/challenges/ChallengerController';
 
 export const challengeRouter = Router();
 
