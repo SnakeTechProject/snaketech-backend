@@ -39,10 +39,6 @@ export class FindArticles {
 
     const articles = await this.repository.findAllByParameters(parameters);
 
-    if(articles.length === 0) {
-      throw new HttpException(404, 'not found');
-    }
-
     return articles;
   }
 }
