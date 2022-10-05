@@ -4,7 +4,7 @@ import { verify } from 'jsonwebtoken';
 import { jwt_secret } from '../config/vars';
 import { HttpException } from './../errors/HttpException';
 
-export const ensureAuthenticated = (
+export const optionalAuthenticated = (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -12,18 +12,20 @@ export const ensureAuthenticated = (
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    throw new HttpException(400, 'Missing auth header');
+    return next();
   }
 
-  const token = authHeader.split(' ')[1];
+  const token = authHeader?.split(' ')[1] as string;
 
   try {
     const payload = <{ user_id: string, permissions: string[] }>verify(token, jwt_secret);
 
-    req.user = {
-      user_id: payload.user_id,
-      permissions: payload.permissions
-    };
+    if (payload.user_id) {
+      req.user = {
+        user_id: payload.user_id,
+        permissions: payload.permissions
+      };
+    }
 
     return next();
   } catch {

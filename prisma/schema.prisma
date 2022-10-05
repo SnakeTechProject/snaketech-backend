@@ -20,6 +20,7 @@ model User {
   Article    Article[]
   Comment    Comment[]
   Likes      Like[]
+  Challenge  Challenge[]
   User_Role  User_Role[]
 
   @@map("user")
@@ -28,7 +29,7 @@ model User {
 model Article {
   id         Int       @id @default(autoincrement())
   title      String
-  slug       String
+  slug       String    @unique
   content    String
   author_id  String
   author     User      @relation(fields: [author_id], references: [id], onDelete: Cascade)
@@ -64,6 +65,20 @@ model Like {
 
   @@id([fk_user_id, fk_article_id])
   @@map("like")
+}
+
+model Challenge {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String
+  description String
+  difficulty  String
+  author_id   String
+  author      User     @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("challenge")
 }
 
 model Role {
