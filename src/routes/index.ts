@@ -6,6 +6,7 @@ import { rolesRouter } from './roles.routes';
 import { rootRouter } from './root.routes';
 import { usersRouter } from './users.routes';
 import { commentsRouter } from './comment.routes';
+import { searchRouter } from './search.routes';
 import { challengeRouter } from './challenges.routes';
 
 export const routes = Router();
@@ -13,6 +14,7 @@ export const routes = Router();
 routes.use('/blog', blogRouter);
 routes.use('/users', usersRouter);
 routes.use('/comments', commentsRouter);
+routes.use('/search', searchRouter);
 routes.use('/challenges', challengeRouter);
 routes.use('/sessions', authenticationRouter);
 routes.use('/roles', rolesRouter);
