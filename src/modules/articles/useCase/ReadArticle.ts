@@ -28,6 +28,10 @@ export default class ReadArticle {
       throw new HttpException(400, `Invalid fields: ${invalidData.join(', ')}`);
     }
 
+    if (!(await this.repository.findOneById(id))) {
+      throw new HttpException(404, 'Article not found');
+    }
+
     const article = await this.repository.findOneById(id);
 
     return {
