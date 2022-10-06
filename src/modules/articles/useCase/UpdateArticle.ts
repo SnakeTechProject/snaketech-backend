@@ -15,19 +15,7 @@ export default class UpdateArticle {
     id: number,
     { content, title }: IArticleUpdate,
   ): Promise<void> {
-    const missingData: string[] = [];
     const invalidData = [];
-
-    if (!title) missingData.push('title');
-
-    if (!content) missingData.push('content');
-
-    if (missingData.length > 0) {
-      throw new HttpException(
-        400,
-        `Missing required fields: ${missingData.join(', ')}`,
-      );
-    }
 
     if (!Validate.isString(title as string))
       invalidData.push('title must be string');
@@ -37,6 +25,10 @@ export default class UpdateArticle {
 
     if (invalidData.length > 0) {
       throw new HttpException(400, `Invalid fields: ${invalidData.join(', ')}`);
+    }
+
+    if (!(await this.repository.findOneById(id))) {
+      throw new HttpException(404, 'Article not found');
     }
 
     const slug = urlSlug(title as string);
