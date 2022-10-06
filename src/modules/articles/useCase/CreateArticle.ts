@@ -14,7 +14,8 @@ export default class CreateArticle {
   public async execute({ author_id, content, title }: IArticle): Promise<void> {
     const missingData: string[] = [];
     const invalidData = [];
-    const slug = urlSlug(title);
+    const now = new Date().getTime();
+    const slug = urlSlug(title) + `-${now}`;
 
     if (!title) missingData.push('title');
 

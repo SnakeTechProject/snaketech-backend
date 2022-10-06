@@ -65,7 +65,8 @@ export class CreateChallenge {
       throw new HttpException(400, `Invalid fields: ${invalidData.join(', ')}`);
     }
 
-    const slug = urlSlug(title);
+    const now = new Date().getTime();
+    const slug = urlSlug(title) + `-${now}`;
 
     const user = await this.usereRepository.findOneById(author_id);
 
