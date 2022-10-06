@@ -1,5 +1,7 @@
 import { Router } from 'express';
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 import { ArticleController } from '../modules/articles/ArticleController';
+import { canRequest } from '../middlewares/permission';
 
 export const blogRouter = Router();
 
@@ -7,8 +9,10 @@ blogRouter.get('/:id', ArticleController.read);
 
 blogRouter.get('/', ArticleController.findAll);
 
-blogRouter.post('/', ArticleController.create);
+blogRouter.use(ensureAuthenticated);
 
-blogRouter.put('/:id', ArticleController.update);
+blogRouter.post('/', canRequest('create:article'), ArticleController.create);
 
-blogRouter.delete('/:id', ArticleController.delete);
+blogRouter.put('/:id', canRequest('update:article'), ArticleController.update);
+
+blogRouter.delete('/:id', canRequest('delete:article'), ArticleController.delete);
