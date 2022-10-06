@@ -10,7 +10,8 @@ import UpdateArticle from './useCase/UpdateArticle';
 const repository = new ArticleRepository();
 export class ArticleController {
   static async create(req: Request, res: Response, next: NextFunction) {
-    const { author_id, content, title } = req.body;
+    const { content, title } = req.body;
+    const author_id = req.user?.user_id as string;
 
     const createArticle = new CreateArticle(repository);
 

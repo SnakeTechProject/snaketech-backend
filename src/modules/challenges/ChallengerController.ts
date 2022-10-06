@@ -10,7 +10,8 @@ const challengeRepository = new ChanllengeRepository();
 export class ChallengeController {
   static async create(req: Request, res: Response) {
 
-    const { author_id, title, description, difficulty } = req.body;
+    const { title, description, difficulty } = req.body;
+    const author_id = req.user?.user_id;
 
     const userRepository = new UserRepository();
     const useCase = new CreateChallenge(challengeRepository, userRepository);
