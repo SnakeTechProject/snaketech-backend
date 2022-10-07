@@ -43,9 +43,7 @@ export class ReadLikes {
       invalidFields.push('User ID is invalid');
     }
 
-    if (!Validate.isNotEmpty(fk_article_id)) {
-      invalidFields.push('Article ID is required');
-    } else if (!Validate.id(fk_article_id)) {
+    if (!Validate.id(fk_article_id)) {
       invalidFields.push('Article ID is invalid');
     }
 
