@@ -45,6 +45,49 @@ export class ArticleRepository {
     });
   }
 
+  async findAllByParameters(parameters: string) {
+    return await db.article.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: parameters
+            }
+          },
+          {
+            content: {
+              contains: parameters
+            }
+          },
+          {
+            slug: {
+              contains: parameters
+            }
+          },
+          {
+            author: {
+              name: {
+                contains: parameters
+              }
+            }
+          }
+        ]
+      },
+      select: {
+        author: {
+          select: {
+            name: true,
+          }
+        },
+        title: true,
+        slug: true,
+        content: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
+  }
+
   async update(id: number, data: IArticleUpdate) {
     return await db.article.update({
       where: { id },
