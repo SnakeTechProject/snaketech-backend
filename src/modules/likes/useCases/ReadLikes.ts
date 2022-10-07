@@ -22,8 +22,8 @@ export class ReadLikes {
     likes.forEach((like) => {
       const {fk_user_id: author, is_liked} = like;
 
-      if (this.user_id && !is_liked && this.user_id === author) {
-        response.user_liked = true;
+      if (this.user_id && this.user_id === author) {
+        response.user_liked = is_liked as boolean;
       }
 
       if (is_liked) {
