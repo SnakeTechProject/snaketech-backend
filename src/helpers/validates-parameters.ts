@@ -6,6 +6,7 @@ interface ILengthLimit {
 class Validate {
   private static uuidV4RegEx = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
   private static emailRegEx = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  private static difficultyOptions = ['easy', 'medium', 'hard'];
 
   public static isNotEmpty = (param: string | number): boolean => {
     return !(param == null || param == undefined || param === '');
@@ -37,6 +38,10 @@ class Validate {
 
   public static email = (email: string): boolean => {
     return (this.emailRegEx.test(email));
+  };
+
+  public static difficulty = (difficulty: string): boolean => {
+    return (this.difficultyOptions.includes(difficulty));
   };
 }
 
