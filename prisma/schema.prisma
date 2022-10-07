@@ -60,6 +60,7 @@ model Comment {
 model Like {
   fk_user_id    String
   fk_article_id Int
+  is_liked      Boolean
   user          User    @relation(fields: [fk_user_id], references: [id])
   article       Article @relation(fields: [fk_article_id], references: [id])
 
