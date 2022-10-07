@@ -5,7 +5,7 @@ import Validate from '../../../helpers/validates-parameters';
 import { LikesRepository } from '../repositories/LikesRepository';
 import { ArticleRepository } from '../../articles/repositories/ArticleRepository';
 
-export class CreateLike {
+export class DefineLike {
   private articlesRepository;
   private likesRepository;
 
@@ -33,7 +33,7 @@ export class CreateLike {
       throw new HttpException(404, 'Article not existis');
     }
 
-    await this.likesRepository.create({
+    await this.likesRepository.define({
       fk_article_id,
       fk_user_id,
       is_liked
