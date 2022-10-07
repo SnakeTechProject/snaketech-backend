@@ -70,7 +70,7 @@ model Like {
 model Challenge {
   id          Int      @id @default(autoincrement())
   title       String
-  slug        String
+  slug        String   @unique
   description String
   difficulty  String
   author_id   String
