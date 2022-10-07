@@ -37,10 +37,7 @@ export class CreateChallenge {
     }
 
     if (missingData.length > 0) {
-      throw new HttpException(
-        400,
-        `Missing required fields: ${missingData.join(', ')}`,
-      );
+      throw new HttpException(400, `Missing required fields: ${missingData.join(', ')}`);
     }
 
     const invalidData = [];
