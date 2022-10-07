@@ -7,14 +7,14 @@ import urlSlug from 'url-slug';
 
 export class CreateChallenge {
   private challengeRepository;
-  private usereRepository;
+  private userRepository;
 
   constructor (
     challengeRepository: ChanllengeRepository,
     userRespository: UserRepository
   ) {
     this.challengeRepository = challengeRepository;
-    this.usereRepository = userRespository;
+    this.userRepository = userRespository;
   }
 
   async execute({ author_id, title, description, difficulty }: IChallenge): Promise<void> {
@@ -61,6 +61,10 @@ export class CreateChallenge {
       invalidData.push('difficult: difficult must be string');
     }
 
+    if (!Validate.difficulty(difficulty)) {
+      invalidData.push('difficult: difficult not exists');
+    }
+
     if (invalidData.length > 0) {
       throw new HttpException(400, `Invalid fields: ${invalidData.join(', ')}`);
     }
@@ -68,7 +72,7 @@ export class CreateChallenge {
     const now = new Date().getTime();
     const slug = urlSlug(title) + `-${now}`;
 
-    const user = await this.usereRepository.findOneById(author_id);
+    const user = await this.userRepository.findOneById(author_id);
 
     if (!user) {
       throw new HttpException(400, 'user does not eexist');
