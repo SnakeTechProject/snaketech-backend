@@ -1,2 +1,3 @@
-export * from './CreateLike';
+export * from './DefineLike';
 export * from './ReadLikes';
+export * from './DeleteLike';
